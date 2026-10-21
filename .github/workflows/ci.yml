@@ -108,3 +108,30 @@ jobs:
             scobca/scan-shuffle:latest
             scobca/scan-shuffle:sha-${{ github.sha }}
           platforms: linux/amd64,linux/arm64
+
+  deploy-production-containers:
+    name: Deploy updated production-images to server
+    needs:
+      - build-docker-images
+
+    if: >-
+      github.event_name == 'push' &&
+      github.ref_name == 'main'
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Configure SSH
+        run: .github/scripts/setup-ssh.sh
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+
+      - name: Pull images and recreate services
+        env:
+          SERVER_HOST: ${{ secrets.SSH_HOST }}
+          SERVER_USER: ${{ secrets.SSH_USER }}
+        run: .github/scripts/pull-images.sh
