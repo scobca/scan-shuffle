@@ -11,7 +11,6 @@ plugins {
 }
 
 group = "org.scobca"
-version = "0.0.1"
 description = "scan-shuffle"
 
 java {
