@@ -107,7 +107,21 @@ allOpen {
 }
 
 tasks.withType<Test> {
-    useJUnitPlatform()
+    val excludedTestTags = providers.gradleProperty("excludeTestTags").orNull
+
+    useJUnitPlatform {
+        excludedTestTags
+            ?.split(",")
+            ?.map(String::trim)
+            ?.filter(String::isNotBlank)
+            ?.let { excludeTags(*it.toTypedArray()) }
+    }
+
+    jvmArgs("-XX:+EnableDynamicAgentLoading")
+
+    filter {
+        isFailOnNoMatchingTests = false
+    }
 }
 
 conventionalCommits {
