@@ -1,0 +1,29 @@
+name: "scan-shuffle ci"
+
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened, edited ]
+  push:
+    branches: [ main ]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  markdown-formatting:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Install markdownlint
+        run: npm install --global markdownlint-cli
+
+      - name: Check Markdown formatting
+        run: markdownlint --config .markdownlint.yaml '**/*.md'
