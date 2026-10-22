@@ -8,6 +8,8 @@ services:
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "43078:5432"
     volumes:
       - scan-shuffle-pg-data:/var/lib/postgresql
     networks:
