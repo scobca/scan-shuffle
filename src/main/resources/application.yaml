@@ -1,3 +1,17 @@
 spring:
   application:
     name: scan-shuffle
+
+  servlet:
+    multipart:
+      max-file-size: 150MB
+      max-request-size: 150MB
+
+database:
+  url: ${DB_URL}
+  user: ${DB_USER}
+  password: ${DB_PASSWORD}
+  schema: public
+
+server:
+  port: 8080
