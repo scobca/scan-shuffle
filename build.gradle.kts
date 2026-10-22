@@ -11,7 +11,6 @@ plugins {
 }
 
 group = "org.scobca"
-version = "0.0.1"
 description = "scan-shuffle"
 
 java {
@@ -107,7 +106,21 @@ allOpen {
 }
 
 tasks.withType<Test> {
-    useJUnitPlatform()
+    val excludedTestTags = providers.gradleProperty("excludeTestTags").orNull
+
+    useJUnitPlatform {
+        excludedTestTags
+            ?.split(",")
+            ?.map(String::trim)
+            ?.filter(String::isNotBlank)
+            ?.let { excludeTags(*it.toTypedArray()) }
+    }
+
+    jvmArgs("-XX:+EnableDynamicAgentLoading")
+
+    filter {
+        isFailOnNoMatchingTests = false
+    }
 }
 
 conventionalCommits {
