@@ -1,0 +1,34 @@
+name: "scan-shuffle"
+services:
+  scan-shuffle-pg:
+    image: postgres:18
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - scan-shuffle-pg-data:/var/lib/postgresql
+    networks:
+      - scan-shuffle-net
+
+  scan-shuffle-service:
+    image: scobca/scan-shuffle:latest
+    restart: always
+    environment:
+      SCAN_SHUFFLE_DOPPLER_ACCESS_KEY: ${SCAN_SHUFFLE_DOPPLER_ACCESS_KEY}
+    volumes:
+      - scan-shuffle-data:/var/
+    ports:
+      - "43077:8080"
+    networks:
+      - scan-shuffle-net
+
+volumes:
+  scan-shuffle-pg-data:
+  scan-shuffle-data:
+
+networks:
+  scan-shuffle-net:
+    driver: bridge
