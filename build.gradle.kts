@@ -30,8 +30,11 @@ val kotlinxSerializationVersion = providers.gradleProperty("kotlinxSerialization
 val kotlinxCoroutinesVersion = providers.gradleProperty("kotlinxCoroutinesVersion").get()
 val dotenvSpringVersion = providers.gradleProperty("dotenvSpringVersion").get()
 val javaxAnnotationVersion = providers.gradleProperty("javaxAnnotationVersion").get()
+val uuidCreatorVersion = providers.gradleProperty("uuidCreatorVersion").get()
 
 dependencies {
+    implementation("ru.career-seekers:core:0.1.1")
+
     // Web: MVC controllers and server-rendered HTML templates.
     implementation("org.springframework.boot:spring-boot-starter-webmvc")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
@@ -65,9 +68,11 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutinesVersion")
 
-    // Utilities: environment variables and the Java annotation API.
+    // Utilities: environment variables, annotations, and UUID generation.
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("one.stayfocused.spring:dotenv-spring-boot:$dotenvSpringVersion")
     implementation("javax.annotation:javax.annotation-api:$javaxAnnotationVersion")
+    implementation("com.github.f4b6a3:uuid-creator:$uuidCreatorVersion")
 
     // Automatic restart during development.
     developmentOnly("org.springframework.boot:spring-boot-devtools")
