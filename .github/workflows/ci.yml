@@ -93,7 +93,7 @@ jobs:
           path: dist
           retention-days: 3
 
-  deploy-frontens:
+  deploy-frontend:
     environment: production
     timeout-minutes: 10
     runs-on: ubuntu-latest
@@ -235,6 +235,7 @@ jobs:
       - unit-tests
       - build-docker-images
       - deploy-production-containers
+      - deploy-frontend
 
     runs-on: ubuntu-latest
     if: >-
