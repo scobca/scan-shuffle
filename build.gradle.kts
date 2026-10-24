@@ -33,6 +33,8 @@ val javaxAnnotationVersion = providers.gradleProperty("javaxAnnotationVersion").
 val uuidCreatorVersion = providers.gradleProperty("uuidCreatorVersion").get()
 
 dependencies {
+    implementation("ru.career-seekers:core:0.1.1")
+
     // Web: MVC controllers and server-rendered HTML templates.
     implementation("org.springframework.boot:spring-boot-starter-webmvc")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
