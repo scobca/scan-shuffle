@@ -69,6 +69,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutinesVersion")
 
     // Utilities: environment variables, annotations, and UUID generation.
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("one.stayfocused.spring:dotenv-spring-boot:$dotenvSpringVersion")
     implementation("javax.annotation:javax.annotation-api:$javaxAnnotationVersion")
     implementation("com.github.f4b6a3:uuid-creator:$uuidCreatorVersion")
