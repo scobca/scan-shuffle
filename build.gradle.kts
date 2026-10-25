@@ -24,8 +24,6 @@ repositories {
 }
 
 val mapstructVersion = providers.gradleProperty("mapstructVersion").get()
-val jsonwebtokenVersion = providers.gradleProperty("jsonwebtokenVersion").get()
-val jaxbApiVersion = providers.gradleProperty("jaxbApiVersion").get()
 val kotlinxSerializationVersion = providers.gradleProperty("kotlinxSerializationVersion").get()
 val kotlinxCoroutinesVersion = providers.gradleProperty("kotlinxCoroutinesVersion").get()
 val dotenvSpringVersion = providers.gradleProperty("dotenvSpringVersion").get()
@@ -39,13 +37,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webmvc")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 
-    // Security: admin login and authorization checks in templates.
+    // Security: HTTP authentication and JWT bearer token validation.
     implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
-
-    // JWT support and the JAXB API.
-    implementation("io.jsonwebtoken:jjwt:$jsonwebtokenVersion")
-    implementation("javax.xml.bind:jaxb-api:$jaxbApiVersion")
 
     // Data: JPA and Kotlin reflection support.
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
