@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.web.bind.annotation.CookieValue
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -21,6 +22,11 @@ import java.util.UUID
 @RestController
 @RequestMapping("/api/v1/auth")
 class AuthController(private val authService: AuthService) {
+
+    @GetMapping("/csrf")
+    fun csrf(): ResponseEntity<Void> {
+        return ResponseEntity.noContent().build()
+    }
 
     @PostMapping("/register")
     fun register(@Valid @RequestBody dto: RegisterUserDto): ResponseEntity<BasicSuccessfulResponse<String>> {

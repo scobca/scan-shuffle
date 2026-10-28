@@ -13,6 +13,13 @@ import org.springframework.security.web.SecurityFilterChain
 @EnableMethodSecurity
 class WebSecurityConfig {
 
+    val csrfPaths = setOf(
+        "/api/v1/auth/register",
+        "/api/v1/auth/login",
+        "/api/v1/auth/refresh",
+        "/api/v1/auth/logout"
+    )
+
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http
@@ -24,10 +31,21 @@ class WebSecurityConfig {
                     "/api/v1/auth/refresh",
                     "/api/v1/auth/logout",
                 ).permitAll()
+
+                auth.requestMatchers(
+                    HttpMethod.GET,
+                    "/api/v1/auth/csrf",
+                ).permitAll()
+
                 auth.anyRequest().authenticated()
             }
             .oauth2ResourceServer { oauth2 -> oauth2.jwt { } }
-            .csrf { csrf -> csrf.disable() }
+            .csrf { csrf ->
+                csrf.spa()
+                csrf.requireCsrfProtectionMatcher { request ->
+                    request.method == "POST" && request.servletPath in csrfPaths
+                }
+            }
             .cors { cors -> cors.disable() }
 
         return http.build()
