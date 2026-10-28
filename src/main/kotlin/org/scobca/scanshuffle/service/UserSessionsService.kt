@@ -5,8 +5,7 @@ import org.scobca.scanshuffle.dto.auth.RotateRefreshTokenDto
 import org.scobca.scanshuffle.entity.UserSession
 import org.scobca.scanshuffle.repository.UserSessionRepository
 import org.springframework.stereotype.Service
-import ru.careerseekers.core.exceptions.BadRequestException
-import ru.careerseekers.core.exceptions.NotFoundException
+import ru.careerseekers.core.exceptions.UnauthorizedException
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 import java.security.SecureRandom
@@ -40,13 +39,13 @@ class UserSessionsService(private val userSessionRepository: UserSessionReposito
     @Transactional
     fun rotate(refreshToken: String): RotateRefreshTokenDto {
         val hash = generateHash(refreshToken)
-        val now = Instant.now()
 
         return userSessionRepository.findByRefreshTokenHash(hash)
             ?.let { userSession ->
+                val now = Instant.now()
 
                 if (userSession.revokedAt != null || !userSession.expiresAt.isAfter(now)) {
-                    throw BadRequestException("Session revoked or expired.")
+                    throw UnauthorizedException("Session unavailable.")
                 }
 
                 val newRefreshToken = generateToken()
@@ -58,7 +57,7 @@ class UserSessionsService(private val userSessionRepository: UserSessionReposito
                     refreshToken = newRefreshToken,
                     userId = userSession.userId
                 )
-            } ?: throw NotFoundException("Session not found.")
+            } ?: throw UnauthorizedException("Session unavailable.")
 
     }
 
