@@ -26,6 +26,7 @@ class WebSecurityConfig {
                 ).permitAll()
                 auth.anyRequest().authenticated()
             }
+            .oauth2ResourceServer { oauth2 -> oauth2.jwt { } }
             .csrf { csrf -> csrf.disable() }
             .cors { cors -> cors.disable() }
 
