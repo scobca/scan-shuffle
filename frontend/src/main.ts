@@ -1,6 +1,11 @@
 import './assets/main.css';
 
-import { createApp } from 'vue';
 import App from './App.vue';
+import { createApp } from 'vue';
+import { installPrimeVue } from './plugins/primevue';
 
-createApp(App).mount('#app');
+const app = createApp(App);
+
+installPrimeVue(app);
+
+app.mount('#app');
