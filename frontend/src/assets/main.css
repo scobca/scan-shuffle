@@ -23,7 +23,19 @@
 }
 
 :root {
+  --color-bg: #f8f8f7;
+  --color-surface: #fff;
+  --color-sidebar: #fdfdfd;
+  --color-muted-surface: #f6f6fa;
+  --color-accent-surface: #f0edff;
+  --color-border: #e2e4ee;
+  --color-text: #111528;
+  --color-text-secondary: #858bab;
+  --color-accent: #6656e8;
+  --color-accent-hover: #5545d5;
   --font-main: 'SF Pro Display', -apple-system, 'Segoe UI', roboto, sans-serif;
+
+  color-scheme: light;
 }
 
 *,
@@ -34,11 +46,19 @@
 
 body {
   margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
   font-family: var(--font-main), serif;
   -webkit-font-smoothing: antialiased;
 }
 
 button,
-input {
+input,
+textarea,
+select {
   font: inherit;
+}
+
+.lucide {
+  flex-shrink: 0;
 }
