@@ -1,0 +1,106 @@
+import axios from 'axios';
+import apiConf from "../api/api.conf.ts";
+import type {AxiosResponse} from 'axios';
+import type {ApiErrorData} from "../api/interfaces/ApiErrorData.ts";
+import type {RequestOptions} from "../api/interfaces/RequestOptions.ts";
+import type {RequestConfig} from "../api/interfaces/RequestConfig.ts";
+
+function isApiErrorData(value: unknown): value is ApiErrorData {
+  return typeof value === 'object' && value !== null;
+}
+
+function getErrorMessage(data: unknown, fallback: string): string {
+  if (!isApiErrorData(data) || typeof data.message !== 'string') {
+    return fallback;
+  }
+
+  const [, messageAfterColon] = data.message.split(':').map((m) => m.trim());
+  return messageAfterColon ?? data.message;
+}
+
+export class ApiRequestError extends Error {
+  readonly status: number;
+
+  constructor(status: number, message: string) {
+    super(message);
+    this.name = 'ApiRequestError';
+    this.status = status;
+  }
+}
+
+class ApiResolverUtil {
+  private readonly apiUrl: string;
+  private readonly endpoint: string;
+
+  constructor(endpoint: string, apiUrl: string = apiConf.apiUrl) {
+    this.apiUrl = apiUrl;
+    this.endpoint = endpoint;
+  }
+
+  async request<S>(options: RequestOptions): Promise<S> {
+    const {url, method, data, jwt, timeout, responseType, customHeaders} =
+      options;
+
+    const fullUrl = `${this.apiUrl}/${this.endpoint}/${url}`;
+    const headers: Record<string, string> = {};
+
+    if (jwt !== undefined && jwt !== '') {
+      headers.Authorization = `Bearer ${jwt}`;
+    }
+
+    if (customHeaders) {
+      Object.assign(headers, customHeaders);
+    }
+
+    const config: RequestConfig<unknown> = {
+      url: fullUrl,
+      method,
+      data,
+      headers,
+      timeout,
+      responseType: responseType ?? 'json',
+    };
+
+    try {
+      const response: AxiosResponse<S> = await axios(config);
+      return response.data;
+    } catch (error: unknown) {
+      if (axios.isAxiosError<unknown>(error)) {
+        const errorData = error.response?.data;
+        const status =
+          error.response?.status ??
+          (isApiErrorData(errorData) && typeof errorData.status === 'number'
+            ? errorData.status
+            : 500);
+
+        throw new ApiRequestError(
+          status,
+          getErrorMessage(errorData, error.message),
+        );
+      }
+
+      throw new ApiRequestError(500, 'Неизвестная ошибка');
+    }
+  }
+
+  DTOToFormData(dto: never): FormData {
+    const formData = new FormData();
+    Object.keys(dto).forEach((key) => {
+      formData.append(key, dto[key]);
+    });
+    return formData;
+  }
+
+  DTOToURLSearchParams(dto: never): URLSearchParams {
+    const params = new URLSearchParams();
+    Object.keys(dto).forEach((key) => {
+      const value = dto[key] as unknown;
+      if (value !== null && value !== undefined) {
+        params.append(key, dto[key]);
+      }
+    });
+    return params;
+  }
+}
+
+export default ApiResolverUtil;
