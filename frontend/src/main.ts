@@ -1,7 +1,14 @@
-import { createApp } from 'vue';
-import { createPinia } from 'pinia';
+import './assets/main.css';
 
 import App from './App.vue';
 import router from './router';
 
-createApp(App).use(router).use(createPinia()).mount('#app');
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import { installPrimeVue } from './plugins/primevue';
+
+const app = createApp(App);
+
+installPrimeVue(app);
+
+app.use(router).use(createPinia()).mount('#app');
