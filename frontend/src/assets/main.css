@@ -1,0 +1,44 @@
+@font-face {
+  font-weight: 400;
+  font-family: 'SF Pro Display';
+  font-style: normal;
+  font-display: swap;
+  src: url('./fonts/SFProDisplay-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-weight: 500;
+  font-family: 'SF Pro Display';
+  font-style: normal;
+  font-display: swap;
+  src: url('./fonts/SFProDisplay-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-weight: 700;
+  font-family: 'SF Pro Display';
+  font-style: normal;
+  font-display: swap;
+  src: url('./fonts/SFProDisplay-Bold.woff2') format('woff2');
+}
+
+:root {
+  --font-main: 'SF Pro Display', -apple-system, 'Segoe UI', roboto, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-main), serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+  font: inherit;
+}
