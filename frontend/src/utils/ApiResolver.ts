@@ -1,9 +1,9 @@
 import axios from 'axios';
-import apiConf from "../api/api.conf.ts";
-import type {AxiosResponse} from 'axios';
-import type {ApiErrorData} from "../api/interfaces/ApiErrorData.ts";
-import type {RequestOptions} from "../api/interfaces/RequestOptions.ts";
-import type {RequestConfig} from "../api/interfaces/RequestConfig.ts";
+import apiConf from '../api/api.conf.ts';
+import type { AxiosResponse } from 'axios';
+import type { ApiErrorData } from '../api/interfaces/ApiErrorData.ts';
+import type { RequestOptions } from '../api/interfaces/RequestOptions.ts';
+import type { RequestConfig } from '../api/interfaces/RequestConfig.ts';
 
 function isApiErrorData(value: unknown): value is ApiErrorData {
   return typeof value === 'object' && value !== null;
@@ -14,7 +14,7 @@ function getErrorMessage(data: unknown, fallback: string): string {
     return fallback;
   }
 
-  const [, messageAfterColon] = data.message.split(':').map((m) => m.trim());
+  const messageAfterColon = data.message.split(':').at(1)?.trim();
   return messageAfterColon ?? data.message;
 }
 
@@ -38,7 +38,7 @@ class ApiResolverUtil {
   }
 
   async request<S>(options: RequestOptions): Promise<S> {
-    const {url, method, data, jwt, timeout, responseType, customHeaders} =
+    const { url, method, data, jwt, timeout, responseType, customHeaders } =
       options;
 
     const fullUrl = `${this.apiUrl}/${this.endpoint}/${url}`;

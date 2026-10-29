@@ -1,5 +1,5 @@
 import type { AxiosRequestConfig } from 'axios';
-import type {AllowedHttpMethods} from "../../utils/types/ApiResolver";
+import type { AllowedHttpMethods } from '../../utils/types/ApiResolver';
 
 export interface RequestOptions {
   url: string;
