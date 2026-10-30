@@ -204,7 +204,7 @@ const activeItem = ref<(typeof navItems)[number]['id']>('overview');
   .app-sidebar {
     flex-basis: 4.75rem;
     min-height: calc(100dvh - 1.5rem);
-    padding: 6rem 0.5rem 0.5rem;
+    padding: 1rem 0.5rem 0.5rem;
   }
 
   .app-sidebar__nav-button.p-button {
