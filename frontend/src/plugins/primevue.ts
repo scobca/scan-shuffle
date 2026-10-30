@@ -67,8 +67,9 @@ const ScanShufflePreset = definePreset(Aura, {
   },
 });
 
-export function installPrimeVue(app: App): void {
+export function installPrimeVue(app: App, license: string): void {
   app.use(PrimeVue, {
+    license,
     theme: {
       preset: ScanShufflePreset,
       options: { darkModeSelector: '.app-dark' },
