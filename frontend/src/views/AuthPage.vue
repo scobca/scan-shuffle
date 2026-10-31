@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {ref} from 'vue';
-import {ArrowRight, Eye, EyeOff, LockKeyhole, Mail} from '@lucide/vue';
+import { ref } from 'vue';
+import { ArrowRight, Eye, EyeOff, LockKeyhole, Mail } from '@lucide/vue';
 
 const email = ref('');
 const password = ref('');
@@ -116,10 +116,10 @@ const showPassword = ref(false);
         </button>
       </form>
 
-<!--      <div class="auth-card__divider"><span>или</span></div>-->
-<!--      <p class="auth-card__footer">-->
-<!--        Нет аккаунта? <span class="auth-card__link">Зарегистрироваться</span>-->
-<!--      </p>-->
+      <!--      <div class="auth-card__divider"><span>или</span></div>-->
+      <!--      <p class="auth-card__footer">-->
+      <!--        Нет аккаунта? <span class="auth-card__link">Зарегистрироваться</span>-->
+      <!--      </p>-->
     </section>
   </div>
 </template>
@@ -216,8 +216,9 @@ const showPassword = ref(false);
   border: 1px solid #d7d9e6;
   border-radius: 9px;
   color: #777e9d;
-  transition: border-color 150ms ease,
-  box-shadow 150ms ease;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
 }
 
 .auth-form__input-wrap:focus-within {

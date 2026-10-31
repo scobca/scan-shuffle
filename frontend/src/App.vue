@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import AppSidebar from './components/AppSidebar.vue';
-import {useRoute} from "vue-router";
+import { useRoute } from 'vue-router';
 
 const route = useRoute();
 </script>
 
 <template>
   <div class="app-shell">
-    <AppSidebar v-if="route.meta.isSidebarVisible == true"/>
+    <AppSidebar v-if="route.meta.isSidebarVisible === true" />
     <main class="app-shell__content">
       <RouterView />
     </main>

@@ -6,7 +6,7 @@ const routes: RouteRecordRaw[] = [
     path: '/auth',
     name: 'auth',
     component: () => import('@/views/AuthPage.vue'),
-    meta: { isSidebarVisible: false }
+    meta: { isSidebarVisible: false },
   },
 ];
 
