@@ -1,8 +1,15 @@
 <script setup lang="ts">
 import AppSidebar from './components/AppSidebar.vue';
 import { useRoute } from 'vue-router';
+import {AuthResolver} from "@/api/auth/AuthResolver.ts";
+import {onBeforeMount} from "vue";
 
 const route = useRoute();
+const authResolver = new AuthResolver();
+
+onBeforeMount(() => {
+  authResolver.getCsrf()
+})
 </script>
 
 <template>
