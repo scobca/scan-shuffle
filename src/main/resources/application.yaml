@@ -16,5 +16,9 @@ database:
   password: ${DB_PASSWORD}
   schema: public
 
+services:
+  frontend-local: ${FRONTEND_LOCAL_HOST}
+  frontend-production: ${FRONTEND_PRODUCTION_HOST}
+
 server:
   port: 8080

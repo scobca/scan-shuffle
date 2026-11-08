@@ -46,7 +46,7 @@ class WebSecurityConfig {
                     request.method == "POST" && request.servletPath in csrfPaths
                 }
             }
-            .cors { cors -> cors.disable() }
+            .cors { }
 
         return http.build()
     }
